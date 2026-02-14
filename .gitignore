@@ -4,3 +4,4 @@
 /be/.env
 /be/node_modules
 /fe/node_modules
+/.ds_store

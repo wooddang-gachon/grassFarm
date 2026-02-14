@@ -1,3 +1,4 @@
+
 /.env
 /fe/.env
 /be/.env
@@ -10,6 +11,6 @@
 /fe/.ds_store
 /be/.ds_store
 
-
+/logs
 /be/logs
 /fe/logs

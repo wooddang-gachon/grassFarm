@@ -1,0 +1,6 @@
+/node_modules
+/.env
+/fe/.env
+/be/.env
+/be/node_modules
+/fe/node_modules

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-async function getVelogPostsByYear(username, targetYear) {
+async function getVelogPostsByYear(username, targetYear = 2026) {
   const endpoint = "https://v2.velog.io/graphql";
 
   const query = `

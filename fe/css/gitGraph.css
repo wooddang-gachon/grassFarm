@@ -1,0 +1,29 @@
+/* 7개의 행(요일)을 고정하고, 열(주차)은 데이터에 따라 자동으로 늘어나는 구조 */
+.graph-container {
+  display: grid;
+  grid-template-rows: repeat(7, 15px);
+  grid-auto-flow: column; /* 세로 방향(행)을 먼저 채우고 다음 열로 이동 */
+  gap: 3px;
+  width: max-content;
+}
+
+.cell {
+  width: 15px;
+  height: 15px;
+  border-radius: 3px;
+  background-color: #ebedf0; /* Base level (0) */
+}
+
+/* 활동 빈도에 따른 이산적 색상 맵핑 */
+.level-1 {
+  background-color: #9be9a8;
+}
+.level-2 {
+  background-color: #40c463;
+}
+.level-3 {
+  background-color: #30a14e;
+}
+.level-4 {
+  background-color: #216e39;
+}

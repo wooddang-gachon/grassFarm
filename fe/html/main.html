@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GitHub Contribution Tracker</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/gitGraph.css" />
+  </head>
+  <body>
+    <h2>GitHub Contribution Viewer</h2>
+
+    <div class="search-container">
+      <input type="text" id="github-id" placeholder="GitHub ID 입력" />
+      <button id="search-btn">검색</button>
+    </div>
+
+    <!-- <div id="graph-container">
+      <p id="placeholder-text">ID를 검색하면 기여도 그래프가 출력됩니다.</p>
+      <img
+        id="contribution-graph"
+        src=""
+        alt="Contribution Graph"
+        style="display: none"
+      />
+    </div> -->
+    <div id="contribution-graph" class="graph-container"></div>
+    <script src="../js/gitGraphJS.js"></script>
+    <script src="../js/gitGraph.js"></script>
+  </body>
+</html>

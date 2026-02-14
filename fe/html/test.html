@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Contribution Graph</title>
+    <style>
+      /* CSS 영역: 그리드 렌더링 구조 정의 */
+      .graph-container {
+        display: grid;
+        grid-template-rows: repeat(7, 15px);
+        grid-auto-flow: column;
+        gap: 3px;
+        width: max-content;
+        margin: 20px;
+      }
+      .cell {
+        width: 15px;
+        height: 15px;
+        border-radius: 3px;
+        background-color: #ebedf0;
+      }
+      /* 데이터 양자화에 따른 이산적 색상 맵핑 */
+      .level-1 {
+        background-color: #9be9a8;
+      }
+      .level-2 {
+        background-color: #40c463;
+      }
+      .level-3 {
+        background-color: #30a14e;
+      }
+      .level-4 {
+        background-color: #216e39;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="contribution-graph" class="graph-container"></div>
+
+    <script>
+      // JavaScript 영역: 데이터 생성 및 DOM 조작 로직
+      function generateTimeSeriesData(daysToGenerate) {
+        return Array.from({ length: daysToGenerate }, (_, index) => {
+          const date = new Date();
+          date.setDate(date.getDate() - (daysToGenerate - 1 - index));
+          return {
+            date: date.toISOString().split("T")[0],
+            activityScore: Math.floor(Math.random() * 15), // 테스트용 난수 생성
+          };
+        });
+      }
+
+      function calculateColorLevel(score) {
+        if (score === 0) return 0;
+        if (score < 4) return 1;
+        if (score < 8) return 2;
+        if (score < 12) return 3;
+        return 4;
+      }
+
+      function renderGraph(dataList) {
+        const container = document.getElementById("contribution-graph");
+
+        dataList.forEach((data) => {
+          const cellElement = document.createElement("div");
+          cellElement.classList.add("cell");
+
+          if (data.activityScore > 0) {
+            const level = calculateColorLevel(data.activityScore);
+            cellElement.classList.add(`level-${level}`);
+          }
+
+          cellElement.title = `Date: ${data.date} | Score: ${data.activityScore}`;
+          container.appendChild(cellElement);
+        });
+      }
+
+      const timeSeriesData = generateTimeSeriesData(365);
+      renderGraph(timeSeriesData);
+    </script>
+  </body>
+</html>

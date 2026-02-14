@@ -1,7 +1,15 @@
-/node_modules
 /.env
 /fe/.env
 /be/.env
+
+/node_modules
 /be/node_modules
 /fe/node_modules
+
 /.ds_store
+/fe/.ds_store
+/be/.ds_store
+
+
+/be/logs
+/fe/logs

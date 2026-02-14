@@ -1,5 +1,5 @@
 import { Router } from "express";
-import githubLogService from "../../service/githubLog.js";
+import githubLogService from "../../service/collector/githubLog.js";
 
 const route = Router();
 

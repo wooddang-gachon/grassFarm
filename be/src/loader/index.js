@@ -1,6 +1,6 @@
 import expressLoader from "./express.js";
 import loggerCreator from "./logger.js";
-import gitoctokit from "./gitoctokit.js";
+import gitoctokit from "./gitOctokit.js";
 
 export default async (app) => {
   const logger = loggerCreator("loader");

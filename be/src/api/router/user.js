@@ -11,13 +11,12 @@ export default (app) => {
 
   route.get("/searched-user/", async (req, res) => {
     const { userId } = req.query;
-    logger.info(`Received request for user search: ${userId}`);
+
     const gitApiService = new GitApiService();
     const userInfo = await gitApiService.getUserInfo({ userId });
-    logger.info(`Fetched user info for ${userId}: ${JSON.stringify(userInfo)}`);
-    res.send(
-      `Searched user with ID: ${userId}, User Info: ${JSON.stringify(userInfo)}`,
-    );
+
+    res.send({ message: `Searched user`, ID: userId });
+    logger.info(`Fetched user info for ${userId}`);
   });
 
   return app;

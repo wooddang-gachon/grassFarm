@@ -135,22 +135,17 @@ export default class GitApi {
       query($login: String!, $from: DateTime!, $to: DateTime!) {
         user(login: $login) {
           contributionsCollection(from: $from, to: $to) {
-            # 1. 커밋 기여 (레포지토리별 노드 추출)
             commitContributionsByRepository(maxRepositories: 100) {
-              contributions(first: 100) {
-                nodes { occurredAt }
-              }
+              contributions(first: 100) { nodes { occurredAt } }
             }
-            # 2. PR 기여
             pullRequestContributions(first: 100) {
               nodes { occurredAt }
             }
-            # 3. 이슈 기여
             issueContributions(first: 100) {
               nodes { occurredAt }
             }
-            # 4. 레포지토리 생성 기여
-            repositoryContributions(first: 100) {
+            # 이미지의 'Code review'에 해당
+            pullRequestReviewContributions(first: 100) {
               nodes { occurredAt }
             }
           }
@@ -167,16 +162,15 @@ export default class GitApi {
       const collection = response.user.contributionsCollection;
       const statsMap = {};
 
-      // 날짜별 카운팅 헬퍼 함수
-      const increment = (dateStr, type) => {
-        const date = dateStr.split("T")[0];
+      const addStat = (occurredAt, type) => {
+        const date = occurredAt.split("T")[0];
         if (!statsMap[date]) {
           statsMap[date] = {
             date,
             commit: 0,
             pr: 0,
             issue: 0,
-            repo: 0,
+            review: 0,
             total: 0,
           };
         }
@@ -184,28 +178,30 @@ export default class GitApi {
         statsMap[date].total++;
       };
 
-      // 각 노드 순회 및 집계
+      // 1. Commits
       collection.commitContributionsByRepository.forEach((repo) => {
         repo.contributions.nodes.forEach((node) =>
-          increment(node.occurredAt, "commit"),
+          addStat(node.occurredAt, "commit"),
         );
       });
+
+      // 2. PRs, Issues, Reviews (Code Review)
       collection.pullRequestContributions.nodes.forEach((node) =>
-        increment(node.occurredAt, "pr"),
+        addStat(node.occurredAt, "pr"),
       );
       collection.issueContributions.nodes.forEach((node) =>
-        increment(node.occurredAt, "issue"),
+        addStat(node.occurredAt, "issue"),
       );
-      collection.repositoryContributions.nodes.forEach((node) =>
-        increment(node.occurredAt, "repo"),
+      collection.pullRequestReviewContributions.nodes.forEach((node) =>
+        addStat(node.occurredAt, "review"),
       );
 
-      // 0인 날짜는 제외하고 날짜순 정렬하여 반환
+      // 활동이 있는 날짜만 정렬하여 반환
       return Object.values(statsMap).sort((a, b) =>
         a.date.localeCompare(b.date),
       );
     } catch (error) {
-      console.error("Detailed contribution fetch failed:", error.message);
+      console.error("데이터 집계 실패:", error.message);
       throw error;
     }
   }

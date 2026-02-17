@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Git Analytics - Auth</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.2/dist/sketchy/bootstrap.min.css"
+    />
+    <style>
+      body {
+        background-color: #f4f4f4;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        margin: 0;
+      }
+      .auth-container {
+        width: 100%;
+        max-width: 450px;
+        padding: 15px;
+      }
+      .card {
+        border-width: 3px;
+        box-shadow: 10px 10px 0px #333;
+      }
+      .nav-tabs {
+        margin-bottom: 20px;
+        border-bottom: 2px solid #333;
+      }
+      .nav-link {
+        font-weight: bold;
+        color: #555;
+      }
+      .nav-link.active {
+        border-width: 2px 2px 0 2px !important;
+        border-color: #333 !important;
+      }
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+      .btn-auth {
+        width: 100%;
+        font-size: 1.2rem;
+        margin-top: 10px;
+        border-width: 2px;
+      }
+      .social-login {
+        text-align: center;
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px dashed #333;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="auth-container">
+      <div class="text-center mb-4">
+        <h1 class="display-5 fw-bold">Git Analytics</h1>
+        <p class="text-muted">Analyze your contribution with AI</p>
+      </div>
+
+      <div class="card border-dark">
+        <div class="card-body">
+          <ul class="nav nav-tabs nav-fill" id="authTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link active"
+                id="login-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#login"
+                type="button"
+                role="tab"
+              >
+                Login
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link"
+                id="signup-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#signup"
+                type="button"
+                role="tab"
+              >
+                Sign Up
+              </button>
+            </li>
+          </ul>
+
+          <div class="tab-content" id="authTabContent">
+            <div class="tab-pane fade show active" id="login" role="tabpanel">
+              <form>
+                <div class="form-group">
+                  <label class="form-label mt-2">Email Address</label>
+                  <input
+                    type="email"
+                    class="form-control border-dark"
+                    placeholder="Enter your email"
+                  />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Password</label>
+                  <input
+                    type="password"
+                    class="form-control border-dark"
+                    placeholder="Password"
+                  />
+                </div>
+                <div class="form-check mb-3">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="rememberMe"
+                  />
+                  <label class="form-check-label" for="rememberMe"
+                    >Remember Me</label
+                  >
+                </div>
+                <button type="submit" class="btn btn-primary btn-auth">
+                  Let's Go!
+                </button>
+              </form>
+            </div>
+
+            <div class="tab-pane fade" id="signup" role="tabpanel">
+              <form>
+                <div class="form-group">
+                  <label class="form-label mt-2">User Name</label>
+                  <input
+                    type="text"
+                    class="form-control border-dark"
+                    placeholder="How should we call you?"
+                  />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Email Address</label>
+                  <input
+                    type="email"
+                    class="form-control border-dark"
+                    placeholder="email@example.com"
+                  />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Password</label>
+                  <input
+                    type="password"
+                    class="form-control border-dark"
+                    placeholder="At least 8 characters"
+                  />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">GitHub ID</label>
+                  <div class="input-group">
+                    <span class="input-group-text border-dark">@</span>
+                    <input
+                      type="text"
+                      class="form-control border-dark"
+                      placeholder="github_username"
+                    />
+                  </div>
+                  <small class="form-text text-muted text-decoration-underline"
+                    >대시보드 분석을 위해 정확한 ID가 필요합니다.</small
+                  >
+                </div>
+                <button type="submit" class="btn btn-success btn-auth">
+                  Create Account
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <div class="social-login">
+            <p class="small mb-2 text-muted">Or Continue with</p>
+            <button class="btn btn-outline-dark w-100">
+              <img
+                src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+                width="20"
+                class="me-2"
+              />
+              Login with GitHub
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-4">
+        <a href="#" class="text-dark small">Forgot Password?</a> |
+        <a href="/" class="text-dark small">Back to Home</a>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

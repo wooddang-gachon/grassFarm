@@ -211,9 +211,3 @@ export default class GitApi {
     }
   }
 }
-
-// const gitApi = new GitApi();
-// const response = await gitApi.getYearlyDetailedContribution({
-//   userId: "wooddang-gachon",
-// });
-// console.log(response);

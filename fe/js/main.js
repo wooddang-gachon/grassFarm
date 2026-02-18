@@ -1,3 +1,5 @@
+import { renderContributionChart } from "./Chart.js";
+
 // 1. 버튼이 아닌 'form' 요소를 선택합니다.
 const searchForm = document.getElementById("github-search-form");
 const searchInput = document.getElementById("github-search-input");
@@ -17,11 +19,14 @@ searchForm.addEventListener("submit", async (event) => {
   try {
     // 2. 비동기 요청 수행
     const response = await fetch(url);
+    const result = await response.json();
 
     // 3. 응답 형식 검증 (서버가 문자열을 보낼 경우 json() 파싱 시 에러 발생 가능)
-    const text = await response.json();
-    console.log("서버 응답:", text);
+    const contributions = result.userInfo.userContribution;
+    renderContributionChart(contributions);
+    console.log("서버 응답:", result);
   } catch (error) {
+    alert("데이터를 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.");
     // 요청 중단 또는 네트워크 오류 포착
     console.error("Fetch Exception:", error.message);
   }

@@ -38,7 +38,3 @@ function renderGraph(dataList) {
     container.appendChild(cellElement);
   });
 }
-
-// 실행
-const timeSeriesData = generateTimeSeriesData(365);
-renderGraph(timeSeriesData);

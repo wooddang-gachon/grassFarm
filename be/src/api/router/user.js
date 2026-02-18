@@ -7,7 +7,7 @@ import UserService from "../../service/user.js";
 const logger = loggerCreator("router");
 const route = Router();
 
-export default (app) => {
+export default async (app) => {
   app.use("/user", route);
 
   route.get("/searched-user/", async (req, res) => {
@@ -15,7 +15,7 @@ export default (app) => {
 
     const userService = new UserService();
     const userInfo = await userService.serchedUserInformation({ userId });
-
+    logger.silly(userInfo);
     res.send({ userInfo });
     logger.info(`Fetched user info for ${userId}`);
   });

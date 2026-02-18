@@ -1,33 +1,26 @@
-import { renderContributionChart } from "./Chart.js";
+import { renderContributionChart } from "./chart_test.js";
+import { renderFollowCount, renderFollowList } from "./follow.js";
 
-// 1. 버튼이 아닌 'form' 요소를 선택합니다.
+// 버튼이 아닌 FORM 자체를 선택하십시오.
 const searchForm = document.getElementById("github-search-form");
-const searchInput = document.getElementById("github-search-input");
 
-// 2. 'submit' 이벤트를 가로채서 제어합니다.
-// 콜백 함수를 'async'로 선언하여 내부에서 'await' 사용 가능하게 처리
-// 콜백 함수에 async 키워드 명시
 searchForm.addEventListener("submit", async (event) => {
-  // 1. 즉시 기본 동작 차단 (논리적 최우선 순위)
+  // 최상단에서 즉시 차단
   event.preventDefault();
 
-  const userId = searchInput.value.trim();
-  if (!userId) return;
-
-  const url = `http://127.0.0.1:8000/api/v1/user/searched-user/?userId=${userId}`;
+  const userId = document.getElementById("github-search-input").value.trim();
 
   try {
-    // 2. 비동기 요청 수행
+    const url = `http://127.0.0.1:8000/api/v1/user/searched-user/?userId=${userId}`;
     const response = await fetch(url);
     const result = await response.json();
+    renderContributionChart(result.userInfo.userContribution);
+    renderFollowCount(result.userInfo.userProfileInfo);
+    const followers = result.userInfo.userFollowers.data || []; // 팔로워 데이터가 없을 경우 빈 배열로 초기화
 
-    // 3. 응답 형식 검증 (서버가 문자열을 보낼 경우 json() 파싱 시 에러 발생 가능)
-    const contributions = result.userInfo.userContribution;
-    renderContributionChart(contributions);
-    console.log("서버 응답:", result);
+    // 리스트 렌더링 함수 실행
+    renderFollowList(followers);
   } catch (error) {
-    alert("데이터를 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.");
-    // 요청 중단 또는 네트워크 오류 포착
-    console.error("Fetch Exception:", error.message);
+    console.error("Fetch Exception:", error);
   }
 });

@@ -4,19 +4,9 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const {
-  combine,
-  timestamp,
-  label,
-  printf,
-  colorize,
-  errors,
-  splat,
-  json,
-  cli,
-} = winston.format;
+const { combine, timestamp, label, printf, colorize, errors, splat } =
+  winston.format;
 
-// 1. 사람이 읽기 편한 커스텀 포맷 정의 (개발용)
 const devLogFormat = printf(({ level, message, label, timestamp, stack }) => {
   // 에러 발생 시 스택 트레이스가 있다면 함께 출력, 없으면 메시지만 출력
   return `${timestamp} [${label}] ${level}: ${stack || message}`;
@@ -80,15 +70,15 @@ if (process.env.NODE_ENV === "development") {
   );
 }
 
-// 3. Logger 인스턴스 생성
+// 3. Logger 인스턴스 생성 > label을 수정하기 위해 일부러 인스턴스 생성할 수 있게 생성
 const loggerCreator = (logLabel) => {
   return winston.createLogger({
-    level: process.env.LEVELS || "info", // 설정이 없으면 기본 info
+    level: process.env.LEVELS || "info",
     levels: winston.config.npm.LEVELS,
     format: combine(
       label({ label: logLabel || "none" }),
       timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
-      errors({ stack: true }), // 에러 발생 시 스택 추적 활성화
+      errors({ stack: true }),
       splat(),
     ),
     transports,

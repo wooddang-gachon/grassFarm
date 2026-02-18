@@ -19,6 +19,7 @@ export default class GitApi {
       throw error;
     }
   }
+
   async getUserFollowing({ userId }) {
     try {
       const response = await this.octokit.request(
@@ -36,6 +37,7 @@ export default class GitApi {
       throw error;
     }
   }
+
   async getUserFollowers({ userId }) {
     try {
       const response = await this.octokit.request(
@@ -53,6 +55,7 @@ export default class GitApi {
       throw error;
     }
   }
+
   async getFollowingWithFollowerCount({ userId, first = 10 }) {
     const query = `
     query($login: String!, $first: Int!) {
@@ -85,6 +88,7 @@ export default class GitApi {
       throw error;
     }
   }
+
   async getFollowersWithFollowerCount({ userId, first = 100, after = null }) {
     const query = `
       query($login: String!, $first: Int!, $after: String) {
@@ -126,6 +130,7 @@ export default class GitApi {
       throw error;
     }
   }
+
   async getYearlyDetailedContribution({ userId }) {
     const now = new Date();
     const from = new Date(now.getFullYear(), 0, 1).toISOString();
@@ -206,8 +211,9 @@ export default class GitApi {
     }
   }
 }
-const gitApi = new GitApi();
-const response = await gitApi.getYearlyDetailedContribution({
-  userId: "wooddang-gachon",
-});
-console.log(response);
+
+// const gitApi = new GitApi();
+// const response = await gitApi.getYearlyDetailedContribution({
+//   userId: "wooddang-gachon",
+// });
+// console.log(response);

@@ -8,5 +8,5 @@ export default async (app) => {
   logger.info("🚀 Starting application loaders...");
   expressLoader(app);
   gitoctokit();
-  logger.info("✅ All loaders initialized successfully.");
+  await logger.info("✅ All loaders initialized successfully.");
 };

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import loggerCreator from "../../loader/logger.js";
-import githubLogService from "../../service/collector/githubLog.js";
+// import githubLogService from "../../service/collector/githubLog.js";
 import GitApiService from "../../service/GitApi.js";
 
 const logger = loggerCreator("router");

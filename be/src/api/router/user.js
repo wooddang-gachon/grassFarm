@@ -16,7 +16,7 @@ export default (app) => {
     const userService = new UserService();
     const userInfo = await userService.serchedUserInformation({ userId });
 
-    res.send({ message: `Searched user`, ID: userId, userInfo });
+    res.send({ userInfo });
     logger.info(`Fetched user info for ${userId}`);
   });
 

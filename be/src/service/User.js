@@ -8,19 +8,61 @@ export default class User {
   }
   async serchedUserInformation({ userId }) {
     try {
-      const userInfo = await this.gitApiService.getUserInfo({ userId });
-      const userFollowing = await this.gitApiService.getUserFollowing({
-        userId,
-      });
-      const userFollowers = await this.gitApiService.getUserFollowers({
-        userId,
-      });
+      const {
+        login,
+        html_url,
+        name,
+        avatar_url,
+        email,
+        twitter_username,
+        public_repos,
+        public_gists,
+        followers,
+        following,
+        created_at,
+        company,
+        blog,
+        location,
+        hireable,
+        bio,
+      } = await this.gitApiService.getUserInfo({ userId });
+      const userProfileInfo = {
+        login,
+        html_url,
+        name,
+        avatar_url,
+        twitter_username,
+        public_repos,
+        public_gists,
+        followers,
+        following,
+        created_at,
+        company,
+        blog,
+        location,
+        email,
+        hireable,
+        bio,
+      };
+      const userFollowing =
+        await this.gitApiService.getFollowingWithFollowerCount({
+          userId,
+        });
+      const userFollowers =
+        await this.gitApiService.getFollowersWithFollowerCount({
+          userId,
+        });
       const userContribution =
         await this.gitApiService.getYearlyDetailedContribution({ userId });
 
       this.logger.info(`Successfully fetched data for user: ${userId}`);
 
-      return { userInfo, userFollowing, userFollowers, userContribution };
+      return {
+        userProfileInfo,
+        userFollowing,
+        userFollowers,
+        userContribution,
+      };
     } catch (error) {
       this.logger.error("Error fetching searched user:", error);
 

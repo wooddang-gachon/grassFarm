@@ -1,49 +1,19 @@
 import GitApiService from "./GitApi.js";
 import loggerCreator from "../loader/logger.js";
+import { UserProfileInfo } from "../model/user.js";
 
 export default class User {
   constructor() {
     this.gitApiService = new GitApiService();
     this.logger = loggerCreator("UserService");
   }
-  async serchedUserInformation({ userId }) {
+  async searchedUserInformation({ userId }) {
+    const start = performance.now(); // 측정 시작
     try {
-      const {
-        login,
-        html_url,
-        name,
-        avatar_url,
-        email,
-        twitter_username,
-        public_repos,
-        public_gists,
-        followers,
-        following,
-        created_at,
-        company,
-        blog,
-        location,
-        hireable,
-        bio,
-      } = await this.gitApiService.getUserInfo({ userId });
-      const userProfileInfo = {
-        login,
-        html_url,
-        name,
-        avatar_url,
-        twitter_username,
-        public_repos,
-        public_gists,
-        followers,
-        following,
-        created_at,
-        company,
-        blog,
-        location,
-        email,
-        hireable,
-        bio,
-      };
+      // dto 할당
+      const rawData = await this.gitApiService.getUserInfo({ userId });
+      const userProfileInfo = new UserProfileInfo(rawData);
+
       const userFollowing =
         await this.gitApiService.getFollowingWithFollowerCount({
           userId,
@@ -54,14 +24,13 @@ export default class User {
         });
       const userContribution =
         await this.gitApiService.getYearlyDetailedContribution({ userId });
-
       this.logger.info(`Successfully fetched data for user: ${userId}`);
 
       return {
         userProfileInfo,
-        userFollowing,
-        userFollowers,
-        userContribution,
+        // userFollowing,
+        // userFollowers,
+        // userContribution,
       };
     } catch (error) {
       this.logger.error("Error fetching searched user:", error);

@@ -16,11 +16,19 @@ searchForm.addEventListener("submit", async (event) => {
     const result = await response.json();
     renderContributionChart(result.userInfo.userContribution);
     renderFollowCount(result.userInfo.userProfileInfo);
-    const followers = result.userInfo.userFollowers.data || []; // 팔로워 데이터가 없을 경우 빈 배열로 초기화
+    const follows = result.userInfo || []; // 팔로워 데이터가 없을 경우 빈 배열로 초기화
 
     // 리스트 렌더링 함수 실행
-    renderFollowList(followers);
+    renderFollowList(follows);
   } catch (error) {
     console.error("Fetch Exception:", error);
   }
 });
+
+//Follow tabble 제어하는 코드
+let currentTabData = {
+  followers: [],
+  following: [],
+};
+
+

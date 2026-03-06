@@ -14,7 +14,7 @@ export default async (app) => {
     const { userId } = req.query;
 
     const userService = new UserService();
-    const userInfo = await userService.serchedUserInformation({ userId });
+    const userInfo = await userService.searchedUserInformation({ userId });
     logger.silly(userInfo);
     res.send({ userInfo });
     logger.info(`Fetched user info for ${userId}`);

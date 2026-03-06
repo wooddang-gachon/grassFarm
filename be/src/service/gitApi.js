@@ -1,4 +1,7 @@
 import gitOctokit from "../loader/gitOctokit.js";
+import loggerCreator from "../loader/logger.js";
+
+const logger = loggerCreator("GitApi");
 
 export default class GitApi {
   constructor() {
@@ -116,15 +119,10 @@ export default class GitApi {
         after,
       });
 
-      const { nodes, pageInfo } = response.user.followers;
-
-      return {
-        data: nodes.map((node) => ({
-          login: node.login,
-          followerCount: node.followers.totalCount,
-        })),
-        pageInfo,
-      };
+      return response.user.followers.nodes.map((node) => ({
+        login: node.login,
+        followers: node.followers.totalCount,
+      }));
     } catch (error) {
       console.error("GraphQL followers request failed:", error.message);
       throw error;
